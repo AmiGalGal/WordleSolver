@@ -1,6 +1,6 @@
 #Disclaimer: using RL is not the recommended way to achieve this, this is for edu purposes, the recommended is probably minimax or some info-theoretic search
 #But I don't mess with information theory that much.
-#did minimax in joined file
+#it does get 100% but it still overkill for this
 
 import pandas as pd
 import gym
