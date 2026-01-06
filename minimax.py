@@ -1,6 +1,6 @@
 import pandas as pd
 from collections import defaultdict
-
+#btw the database isnt that good, it misses some words
 #loads words
 df = pd.read_csv("valid_guesses.csv")
 WORDS = df["word"].str.lower().tolist()
