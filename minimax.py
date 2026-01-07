@@ -1,8 +1,8 @@
 import pandas as pd
 from collections import defaultdict
-#btw the database isnt that good, it misses some words
+
 #loads words
-df = pd.read_csv("valid_guesses.csv")
+df = pd.read_csv("merged.csv")
 WORDS = df["word"].str.lower().tolist()
 
 #using the domain of solutions and of guesses to be diff because i can guess stuff i already tested
@@ -88,8 +88,8 @@ def play_wordle():
     print("Example: 20110\n")
 
     for turn in range(1, 7):
-        if turn == 1:
-            guess = "soare"
+        if turn==1: #i just ran it one time to get the best 1st guess since its not affect by the word
+            guess = "serai"
             score = 0
         elif len(candidates) == 1:
             guess = candidates[0]
@@ -112,7 +112,7 @@ def play_wordle():
         print(f"Remaining candidates: {len(candidates)}\n")
         print(candidates)
         if len(candidates) == 0:
-            print("No candidates left — check your feedback.")
+            print("No candidates left — check your shlomper.")
             return
 
     print("\nI have Failed nigga")
