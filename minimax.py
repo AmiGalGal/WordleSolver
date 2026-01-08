@@ -1,12 +1,17 @@
 import pandas as pd
 from collections import defaultdict
 
+from pip._internal.resolution.resolvelib import candidates
+
 #loads words
 df = pd.read_csv("merged.csv")
 WORDS = df["word"].str.lower().tolist()
 
+df2 = pd.read_csv("valid_solutions.csv")
+solutions = df2["word"].str.lower().tolist()
+
 #using the domain of solutions and of guesses to be diff because i can guess stuff i already tested
-CANDIDATES = WORDS.copy()
+CANDIDATES = solutions.copy()
 GUESSES = WORDS.copy()
 
 #feedback - turn the guess into a readable results
@@ -53,6 +58,8 @@ def choose_best_guess(candidates, guesses):
 
     return best_guess, best_score
 
+TotalG = 0
+
 #just an algorithm to see how it would solve known word, for testing purposes
 def solve_wordle(secret, max_steps=6):
     candidates = CANDIDATES.copy()
@@ -60,9 +67,13 @@ def solve_wordle(secret, max_steps=6):
     print(f"\nSecret: {secret}")
 
     for step in range(1, max_steps+1):
+
         if len(candidates) == 1:
             guess = candidates[0]
             score = 0
+        elif step == 1:
+            guess = "arise"
+            score = 368
         else:
             guess, score = choose_best_guess(candidates, GUESSES)
         fb = feedback(guess, secret)
@@ -79,18 +90,19 @@ def solve_wordle(secret, max_steps=6):
     print("I have Failed nigga")
     return None
 
+
+
 def play_wordle():
     candidates = CANDIDATES.copy()
-
     print("\nWordle Solver")
     print("Enter feedback after each guess:")
     print("2 = green, 1 = yellow, 0 = gray")
     print("Example: 20110\n")
 
     for turn in range(1, 7):
-        if turn==1: #i just ran it one time to get the best 1st guess since its not affect by the word
-            guess = "serai"
-            score = 0
+        if turn==1:
+            guess = "arise"
+            score = 368
         elif len(candidates) == 1:
             guess = candidates[0]
         else:
@@ -112,10 +124,17 @@ def play_wordle():
         print(f"Remaining candidates: {len(candidates)}\n")
         print(candidates)
         if len(candidates) == 0:
-            print("No candidates left — check your shlomper.")
+            print("No badabong left — check your shlomper.")
             return
 
     print("\nI have Failed nigga")
 
 
-play_wordle()
+plays = 0
+for item in solutions:
+    print(plays, "/", len(solutions))
+    plays += 1
+    TotalG += solve_wordle(item)
+    print(TotalG/plays)
+print(TotalG/len(solutions))
+
